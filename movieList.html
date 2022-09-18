@@ -5,76 +5,14 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>MovieList</title>
-  <!-- <script type="module" src="./movieApi.js" defer></script> -->
+  <script type="module" src="./movieRank.js" defer></script>
 </head>
 <body>
   <div id = "root"></div>
 
   <script>
 
-    const root = document.getElementById("root");
-    console.log(root);
-
-
-    class ApiData{
-      constructor(rank, title, openDt){
-        this.rank = rank;
-        this.title =title;
-        this.openDt = openDt;
-      }
-    }
-
-    function movie (){
-      let totalData = [];
-        const api_KEY = '19d2a86ba729ecb37eccaba04437d50b';
-        const targetDt = '20220915';
-        const api_URL = `http://kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json?key=${api_KEY}&targetDt=${targetDt}`;
-        const request = new XMLHttpRequest();
-        request.open("GET", api_URL);
-        request.responseType = "json";
-        request.send();
-        request.addEventListener("load", ()=>{
-          const data = request.response;
-          console.log(data);
-          // console.log(data);
-          const List = data.boxOfficeResult.dailyBoxOfficeList;
-          console.log(List);
-
-
-          // for(let i = 0; i<count; i++){
-            // let setObj = {
-            //   id : List[count].rank,
-            //   title : List[count].movieNm,
-            //   openDt : List[count].openDt
-            // }
-            // console.log(setObj);
-
-            let tempObject = new ApiData(setObj.id, setObj.title, setObj.openDt);
-          // }
-
-          List.forEach((value)=>{
-            totalData.push(new ApiData(value.rank,value.movieNm,value.openDt));
-          })
-          
-          totalData.push(tempObject);
-          console.log(totalData);
-        });
-        
-    }
-    movie();
-
-
-    // let j = 0;
-    // for(let i = 0; i<10; i++){
-    //   j++
-    //   movie(count);
-    // };
-
-
-    
   
-    
-    
 
     // function Date(){
     //   const api_KEY = '19d2a86ba729ecb37eccaba04437d50b';
@@ -125,24 +63,57 @@
     // }
     // MovieList();
 
-    // function actorList(){
-    //   const api_KEY = '19d2a86ba729ecb37eccaba04437d50b';
-    //   const peopleNm = '이정재';
-    //   const api_URL = `http://kobis.or.kr/kobisopenapi/webservice/rest/people/searchPeopleList.json?key=${api_KEY}&peopleNm=${peopleNm}`;
-    //   const request = new XMLHttpRequest();
-    //     request.open("GET", api_URL);
-    //     request.responseType = "json";
-    //     request.send();
-    //     request.addEventListener("load", ()=>{
-    //       const date = request.response;
-    //       console.log('영화배우');
-    //       console.log(date);
-    //     });
-    // }
+  class actorData{
+    constructor(peopleNm, filmoNames, peopleCd, repRoleNm){
+      this.peopleNm = peopleNm;
+      this.filmoNames =filmoNames;
+      this.peopleCd = peopleCd;
+      this.repRoleNm = repRoleNm
+    }
+  }
 
-    // actorList();
+
+function actor(){
+  let actorInfo = [];
+    const api_KEY = '19d2a86ba729ecb37eccaba04437d50b';
+    const peopleNm = '하정우';
+    const api_URL = `http://kobis.or.kr/kobisopenapi/webservice/rest/people/searchPeopleList.json?key=${api_KEY}&peopleNm=${peopleNm}`;
+  const request = new XMLHttpRequest();
+  request.open("GET", api_URL);
+  request.responseType = "json";
+  request.send();
+  request.addEventListener("load", ()=>{
+    const date = request.response;
+    // console.log('영화배우');
+    // console.log(date);
+
+    const information =date.peopleListResult.peopleList;
+    console.log(information);
+    
+    information.forEach((value)=>{
+      actorInfo.push(new actorData(value.peopleNm, value.filmoNames, value.peopleCd, value.repRoleNm));
+    })
+
+    // console.log(actorInfo);
+    
+
+    let ul = document.createElement('ul');
+    actorInfo.forEach((value)=>{
+      // if(actorInfo.repRoleNm === '배우'){
+      //   let li = document.createElement('li');
+      // }
+    
+      // ul.appendChild(li);
+    })
+    root.appendChild(ul);
 
     
+
+  });
+
+}
+
+actor();
 
   </script>
 
